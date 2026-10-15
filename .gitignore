@@ -1,0 +1,27 @@
+# Local datasets and generated experiment outputs
+/data/
+/outputs/
+/checkpoints/
+/dist/
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Python, environments and editor state
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Local credentials and configuration
+.env
+.env.*
+!.env.example
+config/*.local.yaml
+*.log

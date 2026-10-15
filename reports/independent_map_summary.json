@@ -1,0 +1,15 @@
+{
+  "total_tiles": 20,
+  "mean_predicted_contour_fraction": 0.047228638748805826,
+  "mean_inference_time_ms": 45.39828499982832,
+  "total_inference_time_ms": 907.9656999965664,
+  "difficulty_counts": {
+    "Conflict / very hard": 6,
+    "Easy": 2,
+    "Hard": 6,
+    "Medium": 6
+  },
+  "ground_truth_available": false,
+  "gpt6_results_available": 20,
+  "postprocessing": "none"
+}

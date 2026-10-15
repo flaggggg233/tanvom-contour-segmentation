@@ -1,0 +1,8 @@
+# Install the matching CUDA build of torch/torchvision first; see README.
+torch==2.6.0
+torchvision==0.21.0
+segmentation-models-pytorch==0.5.0
+numpy==2.5.3
+Pillow==12.3.0
+PyYAML==6.0.3
+opencv-python==5.0.0.93

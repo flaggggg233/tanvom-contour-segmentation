@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "train_samples": 128,
+  "validation_samples": 64,
+  "epochs": 1,
+  "train_loss": 1.6309924684464931,
+  "validation": {
+    "dice": 0.3357083017942909,
+    "iou": 0.2017124174543571,
+    "precision": 0.21328250305139138,
+    "recall": 0.7880618986432482,
+    "f1": 0.3357083017942909,
+    "loss": 1.454771887511015
+  },
+  "loss_is_finite": true,
+  "gpu_used": true,
+  "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "oom_occurred": false,
+  "elapsed_seconds": 7.954126834869385,
+  "checkpoint": "outputs/tanvom_baseline_v1/checkpoints/smoke_test_model.pth"
+}

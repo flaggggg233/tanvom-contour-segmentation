@@ -1,0 +1,45 @@
+{
+  "dataset_root": "data/TANVOM_dataset_V1",
+  "metadata_path": "data/TANVOM_dataset_V1/processed/tiles_512_s128_v1/metadata.csv",
+  "split_source": "metadata.csv split=train; TANVOM map-sheet-level split",
+  "train_sample_count": 18880,
+  "validation_sample_count": 2664,
+  "map_ids_by_split": {
+    "train": [
+      "burenflue_10000",
+      "parad_10000",
+      "varro-haz_10000"
+    ],
+    "val": [
+      "felsotarkany_10000"
+    ]
+  },
+  "missing_image_mask_pairs": [],
+  "duplicated_image_paths": [],
+  "duplicated_mask_paths": [],
+  "image_size_distribution": {
+    "512x512": 21544
+  },
+  "mask_size_distribution": {
+    "512x512": 21544
+  },
+  "mask_foreground_pixel_ratio_statistics": {
+    "min": 0.00019073486328125,
+    "q25": 0.04082489013671875,
+    "median": 0.07611465454101562,
+    "q75": 0.10743331909179688,
+    "max": 0.208526611328125,
+    "mean": 0.07603806029276206
+  },
+  "mask_values_seen": {
+    "0": 21544,
+    "255": 21544
+  },
+  "checks": {
+    "all_pairs_exist": true,
+    "all_sizes_match": true,
+    "native_512x512": true,
+    "official_split_used": true,
+    "map_sheet_leakage": []
+  }
+}

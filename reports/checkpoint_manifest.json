@@ -1,0 +1,16 @@
+{
+  "file": "best_model.pth",
+  "sha256": "1e426e4247daa42fd1dd8c4904743d73e8c1a482e9b00c8c19727a632918d05f",
+  "size_bytes": 57422534,
+  "best_epoch": 2,
+  "validation": {
+    "dice": 0.9491151955246533,
+    "iou": 0.9031581687000395,
+    "precision": 0.9483031397162449,
+    "recall": 0.9499286432926213,
+    "f1": 0.9491151955246533,
+    "loss": 0.10808233286648451
+  },
+  "contents": "model_state_dict, portable config, epoch, validation; no optimizer state",
+  "download_url": "https://github.com/flaggggg233/tanvom-contour-segmentation/releases/download/baseline-v1/best_model.pth"
+}

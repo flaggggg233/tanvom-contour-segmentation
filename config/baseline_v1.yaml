@@ -1,0 +1,36 @@
+# Extract the official dataset here, or change this path for your machine.
+dataset_root: "data/TANVOM_dataset_V1"
+metadata_relpath: "processed/tiles_512_s128_v1/metadata.csv"
+output_dir: "outputs/tanvom_baseline_v1"
+task: contour_binary_segmentation
+target: "ISOM 101 + 102 merged contour geometry"
+model: Unet
+encoder: resnet18
+encoder_weights: imagenet
+in_channels: 3
+classes: 1
+input_size: 512
+batch_size: 2
+epochs: 20
+smoke_train_samples: 128
+smoke_validation_samples: 64
+smoke_epochs: 1
+learning_rate: 0.0001
+weight_decay: 0.0001
+loss: bce_plus_dice
+optimizer: AdamW
+scheduler: none
+threshold: 0.5
+augmentation:
+  enabled: false
+  type: none
+mixed_precision: true
+num_workers: 0
+pin_memory: true
+random_seed: 42
+deterministic: false
+benchmark: true
+train_split_source: "metadata.csv split=train; TANVOM map-sheet-level split"
+validation_split_source: "metadata.csv split=val; TANVOM map-sheet-level split"
+fixed_visualization_samples: 10
+frozen_baseline: true

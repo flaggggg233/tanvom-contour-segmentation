@@ -1,0 +1,20 @@
+{
+  "best_epoch": 2,
+  "best_validation": {
+    "dice": 0.9491151955246533,
+    "iou": 0.9031581687000395,
+    "precision": 0.9483031397162449,
+    "recall": 0.9499286432926213,
+    "f1": 0.9491151955246533,
+    "loss": 0.10808233286648451
+  },
+  "train_samples": 18880,
+  "validation_samples": 2664,
+  "parameter_count": 14328209,
+  "batch_size_requested": 2,
+  "batch_size_final": 2,
+  "training_time_seconds": 22180.42787861824,
+  "oom_occurred": false,
+  "gpu_memory_peak_mb": 2136,
+  "hyperparameter_tuning": false
+}

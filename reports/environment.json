@@ -1,0 +1,13 @@
+{
+  "python_version": "3.13.5 (tags/v3.13.5:6cb20a2, Jun 11 2025, 16:15:46) [MSC v.1943 64 bit (AMD64)]",
+  "torch_version": "2.6.0+cu124",
+  "cuda_available": true,
+  "cuda_runtime_version": "12.4",
+  "gpu_name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+  "gpu_vram_mb": 6143,
+  "device": "cuda",
+  "segmentation_models_pytorch_version": "0.5.0",
+  "numpy_version": "2.5.3",
+  "opencv_version": "5.0.0",
+  "mixed_precision": true
+}
