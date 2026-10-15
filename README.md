@@ -2,13 +2,13 @@
 
 **Contour segmentation on TANVOM with U-Net + ResNet18**
 
-这是我用 PyTorch 做的一次定向地图等高线提取实验。我在 TANVOM 数据集上训练了 U-Net + ResNet18，把 ISOM 101/102 合并成一个等高线类别进行二值分割。训练结束后，我检查了低分样本，并把模型拿到另一张地图上做推理，看看换图以后效果如何。
+基于 PyTorch 的计算机视觉实验：从定向地图 RGB 图块中提取 ISOM 101/102 合并等高线，完成数据检查、训练、像素评估、困难样本分析及独立地图推理。
 
 技术栈：Python · PyTorch · segmentation-models-pytorch · U-Net · ResNet18 · CUDA · AMP
 
 ## 实验结果
 
-这次一共训练了 20 个 epoch，按验证集 Dice 保存最佳模型，最好的结果出现在第 2 个 epoch。下面是对应的验证结果，完整记录在 [`reports/baseline_v1_report.json`](reports/baseline_v1_report.json)。计算指标时，我汇总了整个验证集的像素 TP/FP/FN，没有直接对各图块的指标取平均。
+以下为本次已完成实验的验证集结果，来自 [`reports/baseline_v1_report.json`](reports/baseline_v1_report.json)。指标由整份验证集的像素 TP/FP/FN 汇总计算，并非各图块指标的算术平均。
 
 | 项目 | 结果 |
 | --- | ---: |
@@ -37,7 +37,7 @@
 
 ![Validation difficult example](assets/validation_worst.png)
 
-这里各放了一张 Dice 最高和最低的图块，方便对照模型学到了什么、又在哪些地方出了问题。其他图块的结果可以查看 [`reports/per_tile_metrics.csv`](reports/per_tile_metrics.csv)。地图图块来源和署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。
+示例为按指标选择的最好/最差样本，不能代表整个数据分布。地图图块来源和署名见 [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)。完整图块指标见 [`reports/per_tile_metrics.csv`](reports/per_tile_metrics.csv)。
 
 ## 方法与实现
 
@@ -50,7 +50,7 @@
 
 ## 环境安装
 
-我是在 Windows、Python 3.13.5、PyTorch 2.6.0 + CUDA 12.4 的环境下完成这次实验的，具体版本记录在 [`reports/environment.json`](reports/environment.json)。
+原实验环境：Windows、Python 3.13.5、PyTorch 2.6.0 + CUDA 12.4。实际软件版本记录在 [`reports/environment.json`](reports/environment.json)。
 
 在仓库根目录打开终端。以下使用已安装的 Python 创建独立环境（Windows PowerShell）：
 
@@ -89,7 +89,7 @@ python train_contour.py --config config/baseline_v1.yaml --phase smoke
 python train_contour.py --config config/baseline_v1.yaml --phase train
 ```
 
-也可以使用 `--phase all` 依次完成这三个阶段。检查点、训练日志、图块指标和可视化都会写入 `outputs/tanvom_baseline_v1/`。上表对应的 20 个 epoch 训练及结果导出花了约 6.16 小时，复现时可以先运行 smoke 阶段，确认数据和显存没有问题。
+或使用 `--phase all` 顺序完成以上阶段。输出写入 `outputs/tanvom_baseline_v1/`，包含检查点、训练日志、图块指标和可视化。复现实验耗时较长，本仓库整理发布时未重新执行完整 20 个 epoch。
 
 使用已有检查点重新评估：
 
@@ -109,15 +109,13 @@ python infer.py --image path/to/map.png --checkpoint checkpoints/best_model.pth 
 
 `infer_oringen_contours.py` 保留原 O-Ringen 对照实验流程，需要另外准备匹配的 manifest 和对照结果，不是单图推理入口。
 
-## 实验中遇到的问题和后续打算
+## 局限与后续方向
 
-这版我先做到了像素分割，还没有接等高线矢量化、拓扑修复或地图重建。训练参数固定后跑了 20 个 epoch，没有额外做超参数搜索或测试时增强。
-
-我比较在意的是换一张地图之后的效果。TANVOM 这次划分里只有一张验证地图，验证集上的 Dice 虽然到了 0.9491，但还不足以判断模型能适应多少种地图。我另外拿 O-Ringen 地图的 20 个图块做了推理和人工对照，看到的提取效果与 TANVOM 验证集上有差别。这张地图没有像素级标注，所以目前只能看图比较，还算不出对应的 Dice 和 IoU。测试过程记在 [`reports/independent_map_test.md`](reports/independent_map_test.md)。
-
-检查低分图块时，极细的线条和前景很少的区域比较容易出问题，会有漏检、误检和断线。对等高线提取来说，即使大部分像素分对了，线条断开之后也可能影响后面的使用，所以我还想把连通性单独拿出来检查。
-
-下一步我想先补充独立地图的标注，把换图后的效果量化，再针对这些细线和稀疏区域做对照实验。等分割结果和线条连续性更稳定一些，再往矢量化和拓扑处理推进。
+- 本项目完成的是**像素级二值分割基线**，没有实现等高线矢量化、拓扑修复或地图重建。
+- 当前只有一张地图用于验证；未使用独立测试集，也未进行超参数搜索或测试时增强。
+- 极细线条和稀疏前景仍存在漏检、误检及断线问题；像素 Dice/IoU 不能证明线条连通性或矢量质量。
+- 在独立 O-Ringen 地图的 20 个图块上进行了推理及人工对照检查，观察到提取效果与 TANVOM 验证集表现有差异；该地图没有像素真值，因此没有独立地图 Dice/IoU，也不能据此量化跨地图泛化能力。见 [`reports/independent_map_test.md`](reports/independent_map_test.md)。
+- 后续可增加独立地图标注，进行跨地图定量评估，并分析细线召回率、连通性及拓扑指标。
 
 ## 文件结构
 
